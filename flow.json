@@ -1,1 +1,1459 @@
-[]
+[
+    {
+        "id": "e9f399c7.9d798",
+        "type": "tab",
+        "label": "RFXCOM",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "4edde058.8049f8",
+        "type": "tab",
+        "label": "Chapeaux",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "d6f957e2.4dade",
+        "type": "tab",
+        "label": "Heartbeat",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a57c51d0.aba738",
+        "type": "rfxtrx-port",
+        "port": "/dev/ttyUSB0",
+        "enableDebug": false,
+        "rfyVenetianMode": "EU"
+    },
+    {
+        "id": "9d3e4d6b.ce1878",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.1.150",
+        "port": "1883",
+        "clientid": "rpi-hallbas",
+        "autoConnect": true,
+        "usetls": false,
+        "compatmode": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "/jarvis/stat/bas/rpi",
+        "birthQos": "2",
+        "birthRetain": "true",
+        "birthPayload": "online",
+        "birthMsg": {},
+        "closeTopic": "/jarvis/stat/bas/rpi",
+        "closeRetain": "true",
+        "closePayload": "offline",
+        "closeMsg": {},
+        "willTopic": "/jarvis/stat/bas/rpi",
+        "willQos": "0",
+        "willRetain": "true",
+        "willPayload": "offline",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "ebcf2554.65cb98",
+        "type": "switch",
+        "z": "e9f399c7.9d798",
+        "name": "Thermometre",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "F702",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "F502",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "5204",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "A001",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "5002",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "A801",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "B904",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "8404",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "E801",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "2302",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 11,
+        "x": 400,
+        "y": 280,
+        "wires": [
+            [
+                "1f3e6c78.11d684",
+                "9651fcdf.59d6d8"
+            ],
+            [
+                "a2ebcb36.1fe508",
+                "9651fcdf.59d6d8"
+            ],
+            [
+                "68a8e905.1fe388",
+                "9651fcdf.59d6d8"
+            ],
+            [
+                "8e126dae.18e97",
+                "9651fcdf.59d6d8"
+            ],
+            [
+                "b1d68d20.0cafe",
+                "9651fcdf.59d6d8"
+            ],
+            [
+                "f2d4b426.cc7cf8",
+                "9651fcdf.59d6d8"
+            ],
+            [
+                "ed563cc2.b6f4a8",
+                "9651fcdf.59d6d8"
+            ],
+            [
+                "9566d40.dd93fb",
+                "9651fcdf.59d6d8"
+            ],
+            [
+                "c5571c95.9f198",
+                "9651fcdf.59d6d8"
+            ],
+            [
+                "da5771a8.7f11c",
+                "9651fcdf.59d6d8"
+            ],
+            [
+                "85bde605.773438"
+            ]
+        ]
+    },
+    {
+        "id": "1f3e6c78.11d684",
+        "type": "change",
+        "z": "e9f399c7.9d798",
+        "name": "Salon",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "/jarvis/stat/bas/Salon_Temperature",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 140,
+        "wires": [
+            [
+                "26a6eba0.f0b7d4",
+                "4fd25809.3b6cc"
+            ]
+        ]
+    },
+    {
+        "id": "26a6eba0.f0b7d4",
+        "type": "smooth",
+        "z": "e9f399c7.9d798",
+        "name": "Smoothing",
+        "action": "mean",
+        "count": "5",
+        "round": "1",
+        "mult": "multi",
+        "x": 850,
+        "y": 620,
+        "wires": [
+            [
+                "7435da0d.9f3b5c"
+            ]
+        ]
+    },
+    {
+        "id": "7435da0d.9f3b5c",
+        "type": "mqtt out",
+        "z": "e9f399c7.9d798",
+        "name": "MQTT",
+        "topic": "",
+        "qos": "2",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9d3e4d6b.ce1878",
+        "x": 990,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "a2ebcb36.1fe508",
+        "type": "change",
+        "z": "e9f399c7.9d798",
+        "name": "Cuisine",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "/jarvis/stat/bas/Cuisine_Temperature",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 180,
+        "wires": [
+            [
+                "26a6eba0.f0b7d4",
+                "57893bc9.f4edc4"
+            ]
+        ]
+    },
+    {
+        "id": "68a8e905.1fe388",
+        "type": "change",
+        "z": "e9f399c7.9d798",
+        "name": "Bureau",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "/jarvis/stat/bas/Bureau_Temperature",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 220,
+        "wires": [
+            [
+                "26a6eba0.f0b7d4",
+                "352a0cc2.afe844"
+            ]
+        ]
+    },
+    {
+        "id": "8e126dae.18e97",
+        "type": "change",
+        "z": "e9f399c7.9d798",
+        "name": "Mezzanine",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "/jarvis/stat/bas/Mezzanine_Temperature",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 670,
+        "y": 260,
+        "wires": [
+            [
+                "26a6eba0.f0b7d4",
+                "c2dca7b7.7551c"
+            ]
+        ]
+    },
+    {
+        "id": "b1d68d20.0cafe",
+        "type": "change",
+        "z": "e9f399c7.9d798",
+        "name": "Ch parents",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "/jarvis/stat/bas/ChParents_Temperature",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 670,
+        "y": 300,
+        "wires": [
+            [
+                "26a6eba0.f0b7d4",
+                "ca224c9f.46e03"
+            ]
+        ]
+    },
+    {
+        "id": "f2d4b426.cc7cf8",
+        "type": "change",
+        "z": "e9f399c7.9d798",
+        "name": "Ch Quentin",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "/jarvis/stat/bas/ChQuentin_Temperature",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 670,
+        "y": 340,
+        "wires": [
+            [
+                "26a6eba0.f0b7d4",
+                "eafe2cda.64c75"
+            ]
+        ]
+    },
+    {
+        "id": "ed563cc2.b6f4a8",
+        "type": "change",
+        "z": "e9f399c7.9d798",
+        "name": "Hall...",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "/jarvis/stat/bas/Hall_Temperature",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 380,
+        "wires": [
+            [
+                "26a6eba0.f0b7d4",
+                "67e558f1.4c35"
+            ]
+        ]
+    },
+    {
+        "id": "9566d40.dd93fb",
+        "type": "change",
+        "z": "e9f399c7.9d798",
+        "name": "SdB Parents",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "/jarvis/stat/bas/SdBParents_Temperature",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 670,
+        "y": 420,
+        "wires": [
+            [
+                "26a6eba0.f0b7d4",
+                "96f228f.309a258"
+            ]
+        ]
+    },
+    {
+        "id": "7e006957.a3a9b",
+        "type": "debug",
+        "z": "e9f399c7.9d798",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "true",
+        "x": 370,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "e9370042.d41fe8",
+        "type": "function",
+        "z": "e9f399c7.9d798",
+        "name": "Change message organisation",
+        "func": "msg.payload = msg.payload.temperature.value;\n\nif (msg.payload > 100 || msg.payload < -10) { //Remove 184°C or -77°C bug with thermometer hall\n    return null;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 170,
+        "y": 280,
+        "wires": [
+            [
+                "ebcf2554.65cb98",
+                "4c432202.c4b914"
+            ]
+        ]
+    },
+    {
+        "id": "4fd25809.3b6cc",
+        "type": "debug",
+        "z": "e9f399c7.9d798",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 1030,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "85bde605.773438",
+        "type": "debug",
+        "z": "e9f399c7.9d798",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "topic",
+        "x": 300,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "a7ea2e68.e57518",
+        "type": "comment",
+        "z": "e9f399c7.9d798",
+        "name": "Thermometre inconnu/nouveau",
+        "info": "",
+        "x": 280,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "c5571c95.9f198",
+        "type": "change",
+        "z": "e9f399c7.9d798",
+        "name": "Pt salon",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "/jarvis/stat/bas/PetitSalon_Temperature",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 661,
+        "y": 462,
+        "wires": [
+            [
+                "26a6eba0.f0b7d4",
+                "90c263e1.c9a4d8"
+            ]
+        ]
+    },
+    {
+        "id": "6d513c02.7ab85c",
+        "type": "rfx-sensor",
+        "z": "e9f399c7.9d798",
+        "name": "RFXCOM temp",
+        "port": "a57c51d0.aba738",
+        "topicSource": "single",
+        "topic": "TEMP2",
+        "x": 80,
+        "y": 120,
+        "wires": [
+            [
+                "7e006957.a3a9b",
+                "e9370042.d41fe8"
+            ]
+        ]
+    },
+    {
+        "id": "399bb96c.a78246",
+        "type": "rfx-sensor",
+        "z": "e9f399c7.9d798",
+        "name": "RFXCOM temp+humidity",
+        "port": "a57c51d0.aba738",
+        "topicSource": "single",
+        "topic": "TH1/0xF702",
+        "x": 110,
+        "y": 60,
+        "wires": [
+            [
+                "a8d2deda.52e8d",
+                "e9370042.d41fe8"
+            ]
+        ]
+    },
+    {
+        "id": "8666c6cb.182a38",
+        "type": "change",
+        "z": "e9f399c7.9d798",
+        "name": "Humidité salon",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "/jarvis/stat/Humidite_Salon",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 670,
+        "y": 60,
+        "wires": [
+            [
+                "26a6eba0.f0b7d4",
+                "43252b89.c7ea04"
+            ]
+        ]
+    },
+    {
+        "id": "80404fde.62c9e",
+        "type": "comment",
+        "z": "e9f399c7.9d798",
+        "name": "Set topic",
+        "info": "",
+        "x": 670,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "a8d2deda.52e8d",
+        "type": "change",
+        "z": "e9f399c7.9d798",
+        "name": "Change message organisation",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.humidity.value",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 390,
+        "y": 60,
+        "wires": [
+            [
+                "8666c6cb.182a38"
+            ]
+        ]
+    },
+    {
+        "id": "ca224c9f.46e03",
+        "type": "debug",
+        "z": "e9f399c7.9d798",
+        "name": "",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 1030,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "c2dca7b7.7551c",
+        "type": "debug",
+        "z": "e9f399c7.9d798",
+        "name": "",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 870,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "352a0cc2.afe844",
+        "type": "debug",
+        "z": "e9f399c7.9d798",
+        "name": "",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 1030,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "57893bc9.f4edc4",
+        "type": "debug",
+        "z": "e9f399c7.9d798",
+        "name": "",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 870,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "43252b89.c7ea04",
+        "type": "debug",
+        "z": "e9f399c7.9d798",
+        "name": "",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 870,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "90c263e1.c9a4d8",
+        "type": "debug",
+        "z": "e9f399c7.9d798",
+        "name": "",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 1030,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "96f228f.309a258",
+        "type": "debug",
+        "z": "e9f399c7.9d798",
+        "name": "",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 870,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "67e558f1.4c35",
+        "type": "debug",
+        "z": "e9f399c7.9d798",
+        "name": "",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 1030,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "eafe2cda.64c75",
+        "type": "debug",
+        "z": "e9f399c7.9d798",
+        "name": "",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 870,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "da5771a8.7f11c",
+        "type": "change",
+        "z": "e9f399c7.9d798",
+        "name": "Ch Matthieu",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "/jarvis/stat/bas/ChMatthieu_Temperature",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 670,
+        "y": 500,
+        "wires": [
+            [
+                "b6a2758a.f8a7d8",
+                "26a6eba0.f0b7d4"
+            ]
+        ]
+    },
+    {
+        "id": "b6a2758a.f8a7d8",
+        "type": "debug",
+        "z": "e9f399c7.9d798",
+        "name": "",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 870,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "4c432202.c4b914",
+        "type": "debug",
+        "z": "e9f399c7.9d798",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 390,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "9651fcdf.59d6d8",
+        "type": "debug",
+        "z": "e9f399c7.9d798",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 610,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "474e57e1.c4846",
+        "type": "mqtt in",
+        "z": "4edde058.8049f8",
+        "name": "Jarvis",
+        "topic": "/jarvis/cmnd/bas/#",
+        "qos": "2",
+        "broker": "9d3e4d6b.ce1878",
+        "inputs": 0,
+        "x": 70,
+        "y": 240,
+        "wires": [
+            [
+                "3b73bfc0.b6c21",
+                "681867aa.1516f"
+            ]
+        ]
+    },
+    {
+        "id": "8861afab.f715e8",
+        "type": "switch",
+        "z": "4edde058.8049f8",
+        "name": "Chapeau",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "HallBas_Chapeau",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "Salon_Chapeau",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "Cuisine_Chapeau",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 3,
+        "x": 560,
+        "y": 240,
+        "wires": [
+            [
+                "96f5f99e.114988",
+                "cd95fab6.b063f8"
+            ],
+            [
+                "9d7d72d6.573e48",
+                "cd95fab6.b063f8"
+            ],
+            [
+                "3db6ea58.f5747e",
+                "cd95fab6.b063f8"
+            ]
+        ]
+    },
+    {
+        "id": "52b8e5c9.61410c",
+        "type": "change",
+        "z": "4edde058.8049f8",
+        "name": "ON/OFF -> 1/0",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "ON",
+                "fromt": "str",
+                "to": "1",
+                "tot": "num"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "OFF",
+                "fromt": "str",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 240,
+        "wires": [
+            [
+                "8861afab.f715e8"
+            ]
+        ]
+    },
+    {
+        "id": "96f5f99e.114988",
+        "type": "rpi-gpio out",
+        "z": "4edde058.8049f8",
+        "name": "Hall",
+        "pin": "5",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 750,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "3db6ea58.f5747e",
+        "type": "rpi-gpio out",
+        "z": "4edde058.8049f8",
+        "name": "Cuisine",
+        "pin": "12",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 760,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "9d7d72d6.573e48",
+        "type": "rpi-gpio out",
+        "z": "4edde058.8049f8",
+        "name": "Salon",
+        "pin": "6",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 750,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "fae8a224.c95e2",
+        "type": "status",
+        "z": "4edde058.8049f8",
+        "name": "MQTT status",
+        "scope": [
+            "474e57e1.c4846"
+        ],
+        "x": 90,
+        "y": 360,
+        "wires": [
+            [
+                "cb0391a2.4e2068"
+            ]
+        ]
+    },
+    {
+        "id": "cb0391a2.4e2068",
+        "type": "switch",
+        "z": "4edde058.8049f8",
+        "name": "Is disconected",
+        "property": "status.text",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "disconnected",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "connecting",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 260,
+        "y": 360,
+        "wires": [
+            [
+                "b6a1e488.184e28"
+            ],
+            [
+                "b6a1e488.184e28"
+            ]
+        ]
+    },
+    {
+        "id": "b6a1e488.184e28",
+        "type": "change",
+        "z": "4edde058.8049f8",
+        "name": "Open chapeaux",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 360,
+        "wires": [
+            [
+                "96f5f99e.114988",
+                "9d7d72d6.573e48",
+                "3db6ea58.f5747e"
+            ]
+        ]
+    },
+    {
+        "id": "3b73bfc0.b6c21",
+        "type": "switch",
+        "z": "4edde058.8049f8",
+        "name": "analog/digital",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ON",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "OFF",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 3,
+        "x": 220,
+        "y": 240,
+        "wires": [
+            [
+                "52b8e5c9.61410c"
+            ],
+            [
+                "52b8e5c9.61410c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "38a57bef.918acc",
+        "type": "switch",
+        "z": "4edde058.8049f8",
+        "name": "Chapeau",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "HallBas_Chapeau",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "Salon_Chapeau",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "Cuisine_Chapeau",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 3,
+        "x": 80,
+        "y": 760,
+        "wires": [
+            [],
+            [
+                "dcbd9946.b62f88"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "dcbd9946.b62f88",
+        "type": "function",
+        "z": "4edde058.8049f8",
+        "name": "Analog",
+        "func": "TIME_UP = 10;\nTIME_DOWN = 10;\n\n\n//Code\n\nvar target = context.get(\"target\");\nif (target === undefined) {\n    target = 0;\n}\n//Save new target temp for later use\nif (msg.direction === undefined) {\n    if (msg.payload >= 0 && msg.payload <= 1) {\n        changeTarget();\n        return null;\n    }\n    else {\n        node.error(\"Received wrong target.\", msg);\n        return null;\n    }\n}\n\n\nif (msg.section === 0 || msg.section == 2) {\n    msg.section = 1;\n}\nelse {\n    msg.section = 2\n}\nnewTime(msg.section);\n\nreturn msg;\n\nfunction newTime (newSection) {\n    if (target <= 0.01) {\n        msg.payload = 0; //Going down\n        msg.delay = TIME_DOWN*1.1;\n        msg.section = 0; //Ensure we start directly when target changes\n    }\n    else if (target >= 0.99) {\n        msg.payload = 1; //Going up\n        msg.delay = TIME_UP*1.1;\n        msg.section = 0; //Ensure we start directly when target changes\n    }\n    else if (target >= 0.5) {\n        if (newSection === 0) {\n            msg.payload = 0; //Going down\n            msg.delay = TIME_DOWN*1.1;\n        }\n        else if (newSection == 1) {\n            msg.payload = 0; //Going down\n            msg.delay = Math.abs(target-1)*TIME_DOWN;\n        }\n        else {\n            msg.payload = 1; //Going up\n            msg.delay = Math.abs(target-1)*TIME_UP*1.1;\n        }\n    }\n    else {\n        if (newSection === 0) {\n            msg.payload = 1; //Going up\n            msg.delay = TIME_UP*1.1;\n        }\n        else if (newSection == 1) {\n            msg.payload = 1; //Going up\n            msg.delay = target*TIME_UP;\n        }\n        else {\n            msg.payload = 0; //Going down\n            msg.delay = target*TIME_DOWN*1.1;\n        }\n    }\n    msg.delay = msg.delay*1000; //Convers msec to sec\n}\n\nfunction changeTarget() {\n    if ((target < 0.4 && msg.payload > 0.6) || (target > 0.6 && msg.payload < 0.4)){\n        context.set(\"nextSector\", 0);\n    }\n    \n    context.set(\"target\", msg.payload);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 330,
+        "y": 660,
+        "wires": [
+            [
+                "9c7aa1cf.2bbeb",
+                "fd953417.08bff"
+            ]
+        ]
+    },
+    {
+        "id": "9c7aa1cf.2bbeb",
+        "type": "debug",
+        "z": "4edde058.8049f8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "complete": "true",
+        "x": 730,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "7d7f2914.3a7478",
+        "type": "inject",
+        "z": "4edde058.8049f8",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "0.5",
+        "payloadType": "num",
+        "x": 110,
+        "y": 640,
+        "wires": [
+            [
+                "dcbd9946.b62f88"
+            ]
+        ]
+    },
+    {
+        "id": "62a5860d.682e1",
+        "type": "inject",
+        "z": "4edde058.8049f8",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 300,
+        "y": 600,
+        "wires": [
+            [
+                "11dceb6.bf96095"
+            ]
+        ]
+    },
+    {
+        "id": "11dceb6.bf96095",
+        "type": "change",
+        "z": "4edde058.8049f8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "direction",
+                "pt": "msg",
+                "to": "0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 600,
+        "wires": [
+            [
+                "5257bb53.c8c64c"
+            ]
+        ]
+    },
+    {
+        "id": "fd953417.08bff",
+        "type": "delay",
+        "z": "4edde058.8049f8",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "5",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "outputs": 1,
+        "x": 350,
+        "y": 740,
+        "wires": [
+            [
+                "5257bb53.c8c64c"
+            ]
+        ]
+    },
+    {
+        "id": "5257bb53.c8c64c",
+        "type": "delay",
+        "z": "4edde058.8049f8",
+        "name": "Delay",
+        "pauseType": "delayv",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 330,
+        "y": 780,
+        "wires": [
+            [
+                "dcbd9946.b62f88"
+            ]
+        ]
+    },
+    {
+        "id": "16a8aa21.ac209e",
+        "type": "inject",
+        "z": "4edde058.8049f8",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "0.75",
+        "payloadType": "num",
+        "x": 110,
+        "y": 680,
+        "wires": [
+            [
+                "dcbd9946.b62f88"
+            ]
+        ]
+    },
+    {
+        "id": "a01328c.fa41958",
+        "type": "inject",
+        "z": "4edde058.8049f8",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 110,
+        "y": 720,
+        "wires": [
+            [
+                "dcbd9946.b62f88"
+            ]
+        ]
+    },
+    {
+        "id": "c376d541.7e11e8",
+        "type": "inject",
+        "z": "4edde058.8049f8",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 110,
+        "y": 600,
+        "wires": [
+            [
+                "dcbd9946.b62f88"
+            ]
+        ]
+    },
+    {
+        "id": "681867aa.1516f",
+        "type": "function",
+        "z": "4edde058.8049f8",
+        "name": "Save last msg time",
+        "func": "\nif (msg.retain) { //Do not process messages that we know are old\n    return msg;\n}\n\nglobal.set(\"lastMQTTMessage\", Math.round((new Date()).getTime() / 1000));\nreturn msg;",
+        "outputs": "0",
+        "noerr": 0,
+        "x": 170,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "4571e1c.2cca52",
+        "type": "inject",
+        "z": "4edde058.8049f8",
+        "name": "",
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 400,
+        "wires": [
+            [
+                "6e28c2ce.4f9f0c"
+            ]
+        ]
+    },
+    {
+        "id": "71d331b3.ac8228",
+        "type": "comment",
+        "z": "4edde058.8049f8",
+        "name": "PWM",
+        "info": "",
+        "x": 140,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "6e28c2ce.4f9f0c",
+        "type": "function",
+        "z": "4edde058.8049f8",
+        "name": "Check last msg time",
+        "func": "//Max time between messages in seconds\nMAX_TIME = 60*60*12;\n\n\n//Code\nlastMessage = global.get(\"lastMQTTMessage\");\ncurrentTime = Math.round((new Date()).getTime() / 1000);\n\nif (currentTime === undefined || currentTime - lastMessage > MAX_TIME*1000) {\n    return msg;\n}\nreturn null;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 280,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "863ab9de.339d18",
+        "type": "mqtt out",
+        "z": "4edde058.8049f8",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "retain": "false",
+        "broker": "9d3e4d6b.ce1878",
+        "x": 930,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "cd95fab6.b063f8",
+        "type": "change",
+        "z": "4edde058.8049f8",
+        "name": "1/0 -> ON/OFF, change topic",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "1",
+                "fromt": "num",
+                "to": "ON",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0",
+                "fromt": "num",
+                "to": "OFF",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "topic",
+                "pt": "msg",
+                "from": "/cmnd/",
+                "fromt": "str",
+                "to": "/stat/",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 180,
+        "wires": [
+            [
+                "84ee679e.144328",
+                "863ab9de.339d18"
+            ]
+        ]
+    },
+    {
+        "id": "84ee679e.144328",
+        "type": "debug",
+        "z": "4edde058.8049f8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 810,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "b61249cb.fe4ab",
+        "type": "mqtt out",
+        "z": "d6f957e2.4dade",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "retain": "false",
+        "broker": "9d3e4d6b.ce1878",
+        "x": 350,
+        "y": 60,
+        "wires": []
+    }
+]
